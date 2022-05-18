@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, ManyToMany } from 'typeorm';
 import { IsBoolean, IsNotEmpty, IsUUID, Length } from 'class-validator'
 import Receita from './Receita'
 
@@ -16,7 +16,7 @@ class Ingrediente {
   @Column("integer", { nullable: false })
   amount: number;
 
-  @ManyToOne(() => Receita, receita => receita.user)
+  @ManyToMany(() => Receita, receita => receita.ingredientes)
   receitas: Receita[];
 
 }
