@@ -16,7 +16,7 @@ class Receita {
   @Column({ nullable: false, type: 'text' })
   preparation: string;
 
-  @Column("varchar", { array: true, nullable: false })
+  @Column("varchar", { array: true, nullable: true })
   photos: string[];
 
   @Column("integer", { nullable: false })
@@ -24,16 +24,15 @@ class Receita {
 
   @ManyToMany(() => Ingrediente, ingrediente => ingrediente.receitas, {
     cascade: true,
+    lazy: true,
   })
   @JoinTable({
     name: 'ingredientes_receitas',
   })
   ingredientes: Ingrediente[];
 
-  @ManyToOne(() => User, user => user.receitas)
+  @ManyToOne(() => User, user => user.receitas, { nullable: false, cascade: ['remove', 'update'] })
   @JoinColumn({ name: 'user_id' })
-  @IsNotEmpty({ message: 'ID de usuário obrigatório.' })
-  @IsUUID()
   user: User;
 
 }
