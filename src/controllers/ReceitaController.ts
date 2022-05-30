@@ -4,7 +4,7 @@ import { isUUID, validate } from 'class-validator';
 
 import Ingrediente from '../models/Ingrediente';
 import Receita from '../models/Receita';
-import receitaView from '../views/receita-view'; 
+import receitaView from '../views/receita-view';
 
 class ProductController {
 
@@ -12,15 +12,15 @@ class ProductController {
         const user = request.user;
         let { name, difficult, preparation, ingredientes } = request.body;
         const receitaRepository = getRepository(Receita);
-
         ingredientes = JSON.parse(ingredientes)
         const requestImages = request.files as Express.Multer.File[];
-
-        const photos = requestImages.map((image) => {
-            return image.filename;
+        
+        const photos = requestImages.map((photo) => {
+            return photo.filename;
         });
 
         const receita = receitaRepository.create({ name, difficult, preparation, ingredientes, user, photos })
+
         const receitaErrors = await validate(receita)
         if (receitaErrors.length > 0) {
             return response.status(400).json(receitaErrors.map(err => err.constraints));
@@ -91,6 +91,7 @@ class ProductController {
     async delete(request: Request, response: Response) {
         const { id } = request.params;
         const receitaRepository = getRepository(Receita);
+        
         try {
             const receitaExists = await receitaRepository.findOne(id);
             if (!receitaExists) {

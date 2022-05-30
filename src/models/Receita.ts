@@ -24,7 +24,8 @@ class Receita {
 
   @ManyToMany(() => Ingrediente, ingrediente => ingrediente.receitas, {
     cascade: true,
-    lazy: true,
+    eager: true,
+    nullable: true,
   })
   @JoinTable({
     name: 'ingredientes_receitas',

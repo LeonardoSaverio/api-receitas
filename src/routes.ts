@@ -20,8 +20,11 @@ router.post('/receitas', upload.array('photos'), authMiddleware, ReceitaControll
 router.get('/receitas', authMiddleware, ReceitaController.index);
 router.get('/receitas/:id', authMiddleware, ReceitaController.show);
 router.get('/receitas/user/:id', authMiddleware, ReceitaController.findReceitasByUser);
-router.put('/receitas/:id', authMiddleware, ReceitaController.update);
+router.put('/receitas/:id',  upload.array('photos'), authMiddleware, ReceitaController.update);
 router.delete('/receitas/:id', authMiddleware, ReceitaController.delete);
+
+router.get('/user/receitas', authMiddleware, ReceitaController.findReceitasByUser);
+
 
 
 
