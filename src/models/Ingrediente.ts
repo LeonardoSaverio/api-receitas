@@ -7,7 +7,7 @@ class Ingrediente {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 40, nullable: false })
+  @Column({ length: 200, nullable: false })
   name: string;
 
   @Column({ nullable: false, type: 'decimal' })
